@@ -28,14 +28,22 @@
 					<tr>
 						<th>
 							<a ng-click="triEmails('from')">De</a>
-							<span class="hSpacer" ng-class="{ glyphicon: champTri == 'from', 'glyphicon-chevron-up': champTri   == 'from' && !triDescendant ,'glyphicon-chevron-down': champTri   == 'from' && triDescendant }"></span>
+							<span class="hSpacer" ng-class="cssChevronsTri('from')"></span>
 						</th>
 						<th>
 							<a ng-click="triEmails('to')">A</a>
-							<span class="hSpacer" ng-class="{ glyphicon: champTri == 'to', 'glyphicon-chevron-up': champTri  == 'to' && !triDescendant ,'glyphicon-chevron-down': champTri  == 'to' && triDescendant}"></span>
+							<span class="hSpacer" ng-class="cssChevronsTri('to')"></span>
 						</th>
-						<th>Object</th>
-						<th>Date</th>
+						<th>
+							<a ng-click="triEmails('subject')">Object</a>
+							<span class="hSpacer" ng-class="cssChevronsTri('subject')"></span>
+							
+						</th>
+						<th>
+							<a ng-click="triEmails('date')">Date</a>
+							<span class="hSpacer" ng-class="cssChevronsTri('date')"></span>							
+							
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,7 +52,7 @@
 						<td>{{email.from}}</td>
 						<td>{{email.to}}</td>
 						<td>{{email.subject}}</td>
-						<td>{{email.date}}</td>
+						<td>{{email.date | date:'dd/MM/yyyy HH:mm'}}</td>
 					</tr>				
 				</tbody>
 			</table>
@@ -64,6 +72,7 @@
 	</div>
 	<script type="text/javascript" src="angularjs/angular.min.js"></script>
 	<script type="text/javascript" src="angularjs/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="angularjs/angular-i18n-master/angular-locale_fr-fr.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 </body>
 </html>
