@@ -34,6 +34,9 @@ angular.module("Webmail", ["ngSanitize"])
 		
 	}
 	$scope.emailselectionne = null;
+	$scope.versEmail = function(dossier,email){
+		$location.path("/" + dossier.value + "/" + email.id);
+	}
 	$scope.selectionEmail = function(email){
 			$scope.emailselectionne = email;
 		
