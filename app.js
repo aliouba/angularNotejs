@@ -41,6 +41,23 @@ angular.module("Webmail", ["ngSanitize"])
 			$scope.emailselectionne = email;
 		
 	}
+	
+	
+	//tri
+	$scope.champTri = null;
+	$scope.triDescendant = false;
+	$scope.triEmails = function(champ){
+		if($scope.champTri == champ){
+			$scope.triDescendant = !$scope.triDescendant;
+		}
+		else{
+			$scope.champTri = champ;
+			$scope.triDescendant = false;
+		}
+	}
+
+
+
 	$scope.$watch(function(){
 			return $location.path();
 	},function(newPath){
