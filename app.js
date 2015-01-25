@@ -1,5 +1,5 @@
 angular.module("Webmail", ["ngSanitize"])
-.controller("Webmailctrl", function($scope,$location){
+.controller("Webmailctrl", function($scope,$location,$filter){
 
 	$scope.dossiers = [
 		{ value: "RECEPTION" ,label: "Boite de Réception" , emails: [
@@ -64,7 +64,17 @@ angular.module("Webmail", ["ngSanitize"])
 	}
 
 
-
+	//Recherche
+	$scope.recherche = null;
+	$scope.razRecherche = function(){
+		$scope.recherche = null; 
+	}
+	//~ $scope.getDossiersFiltres = function(){
+		//~ return $filter("filter")($scope.dossierCourant.emails,$scope.recherche);	
+	//~ }
+	
+	
+	
 	$scope.$watch(function(){
 			return $location.path();
 	},function(newPath){
@@ -87,4 +97,13 @@ angular.module("Webmail", ["ngSanitize"])
 		}
 		
 		});
+})
+.filter("surbrillanceRecherche",function(){
+	return  function(input,recherche){
+		if(recherche){
+			return input.replace(new RegEx("(" + recherche +")","gi"),"<span class='surbrillanceRecherche'>$1</span>");
+		}
+		return input;
+		
+	}
 });
