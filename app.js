@@ -29,8 +29,12 @@ angular.module("Webmail", ["ngSanitize"])
 	
 	$scope.dossierCourant = null;
 	$scope.selectionDossier = function(dossier){
-			$scope.dossierCourant = dossier;
+	 		$scope.dossierCourant = dossier;
 			$scope.emailselectionne = null;
+			if(dossier){
+				$scope.nouveauMail = null;
+			}
+			
 		
 	}
 	$scope.emailselectionne = null;
@@ -41,7 +45,6 @@ angular.module("Webmail", ["ngSanitize"])
 			$scope.emailselectionne = email;
 		
 	}
-	
 	
 	//tri
 	$scope.champTri = null;
@@ -55,6 +58,7 @@ angular.module("Webmail", ["ngSanitize"])
 			$scope.triDescendant = false;
 		}
 	}
+
 	
 	$scope.cssChevronsTri = function(champ){
 		return { 
@@ -68,11 +72,30 @@ angular.module("Webmail", ["ngSanitize"])
 	$scope.recherche = null;
 	$scope.razRecherche = function(){
 		$scope.recherche = null; 
-	}
+	}  
 	//~ $scope.getDossiersFiltres = function(){
 		//~ return $filter("filter")($scope.dossierCourant.emails,$scope.recherche);	
 	//~ }
 	
+	//Creation d'E-mail
+	$scope.nouveauMail = null;
+	$scope.razMail = function(){
+		$scope.nouveauMail = {
+			from: "Aliou", 
+			date: new Date()
+		};	
+	}
+	$scope.idProchainmail = 12;
+	$scope.envoiMail = function(){
+		$scope.dossiers.forEach(function(item){
+			if(item.value == "ENVOYES"){
+				$scope.nouveauMail.id = $scope.idProchainmail++;
+				item.emails.push($scope.nouveauMail);
+				$scope.nouveauMail = null;
+				$location.path("/");
+			}
+		});
+	}
 	
 	
 	$scope.$watch(function(){
@@ -80,19 +103,25 @@ angular.module("Webmail", ["ngSanitize"])
 	},function(newPath){
 		var tabPath = newPath.split("/");
 		if(tabPath.length > 1 ){
-			var valDossier = tabPath[1];
-			$scope.dossiers.forEach(function(item){
-				if (item.value == valDossier){
-					$scope.selectionDossier(item);
-				}
-			});
-			if(tabPath.length > 2 ){
-				var idMail = tabPath[2];
-				$scope.dossierCourant.emails.forEach(function(item){
-					if (item.id == idMail){
-						$scope.selectionEmail(item);
+			if(tabPath[1] == "nouveauMail"){
+				$scope.razMail();
+				$scope.selectionDossier() = null;
+			}
+			else{
+				var valDossier = tabPath[1];
+				$scope.dossiers.forEach(function(item){
+					if (item.value == valDossier){
+						$scope.selectionDossier(item);
 					}
 				});
+				if(tabPath.length > 2 ){
+					var idMail = tabPath[2];
+					$scope.dossierCourant.emails.forEach(function(item){
+						if (item.id == idMail){
+							$scope.selectionEmail(item);
+						}
+					});
+				}				
 			}
 		}
 		
